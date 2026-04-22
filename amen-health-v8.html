@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amen Health — Send Your Prayer to the Western Wall</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,500;1,300;1,400&family=EB+Garamond:ital,wght@0,400;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --cream:#fbfaf7;
+  --white:#ffffff;
+  --sky-start:#a1bacc;
+  --sky-end:#ddeaf3;
+  --charcoal:#222222;
+  --text-mid:#4a4a4a;
+  --text-soft:#888888;
+  --gold:#b09b71;
+  --gold-light:#c9b48a;
+  --gold-pale:#f5f0e6;
+  --divider:#e0ddd6;
+  --divider-light:#eeebe4;
+  --wa:#25D366;--wa-dark:#128C7E;
+}
+html{scroll-behavior:smooth}
+body{background:var(--cream);color:var(--charcoal);font-family:'Inter',sans-serif;font-weight:300;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+
+/* ── NAV ── */
+nav{position:sticky;top:0;z-index:300;background:var(--white);border-bottom:1px solid var(--divider)}
+.nav-inner{max-width:1200px;margin:0 auto;padding:0 4%;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;height:64px}
+.nav-left{display:flex;gap:2rem;align-items:center}
+.nav-left a{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-mid);text-decoration:none;font-weight:400;transition:color .2s}
+.nav-left a:hover{color:var(--gold)}
+.nav-logo{font-family:'Cormorant',serif;font-size:1.1rem;font-weight:300;letter-spacing:.3em;text-transform:uppercase;color:var(--charcoal);text-decoration:none;text-align:center;line-height:1.2}
+.nav-logo span{display:block;font-size:.5rem;letter-spacing:.45em;color:var(--gold);font-family:'Inter',sans-serif;font-weight:400;margin-top:.15rem}
+.nav-right{display:flex;gap:1.2rem;align-items:center;justify-content:flex-end}
+.nav-lang{font-size:.68rem;letter-spacing:.1em;color:var(--text-soft);text-decoration:none;transition:color .2s}
+.nav-lang:hover{color:var(--gold)}
+.btn-pill{background:var(--gold);color:var(--white);font-size:.7rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;padding:.55rem 1.4rem;border-radius:100px;border:none;cursor:pointer;text-decoration:none;transition:all .25s}
+.btn-pill:hover{background:var(--gold-light)}
+@media(max-width:768px){.nav-inner{grid-template-columns:1fr auto}.nav-left,.nav-lang{display:none}}
+
+/* ══ SLIDER ══ */
+.slider{position:relative;width:100%;height:90vh;min-height:560px;overflow:hidden;background:var(--charcoal)}
+@media(max-width:700px){.slider{height:75vh;min-height:400px}}
+
+.slide{position:absolute;inset:0;opacity:0;transition:opacity 1.2s ease;z-index:1}
+.slide.active{opacity:1;z-index:2}
+.slide img{width:100%;height:100%;object-fit:cover;object-position:center;display:block}
+
+/* Per-slide focus points */
+.slide:nth-child(1) img{object-position:center center}
+.slide:nth-child(2) img{object-position:center 30%}
+.slide:nth-child(3) img{object-position:center 40%}
+.slide:nth-child(4) img{object-position:center 25%}
+.slide:nth-child(5) img{object-position:center 20%}
+.slide:nth-child(6) img{object-position:center 35%}
+
+/* Overlay — darker at bottom for text legibility */
+.slide-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(15,10,5,.15) 0%,rgba(15,10,5,.25) 40%,rgba(15,10,5,.72) 100%);z-index:3}
+
+/* Slide content */
+.slide-content{position:absolute;bottom:0;left:0;right:0;z-index:4;padding:3.5rem 5% 0;display:flex;flex-direction:column;align-items:center;text-align:center}
+
+/* Caption bar per slide */
+.slide-caption{font-family:'EB Garamond',serif;font-size:clamp(.85rem,2vw,1.05rem);font-style:italic;color:rgba(255,255,255,.72);letter-spacing:.04em;margin-bottom:1.2rem;min-height:1.4em;transition:opacity .6s}
+
+/* Main hero text — fixed, always visible */
+.slider-hero-text{width:100%;max-width:820px;margin:0 auto}
+.slider-eyebrow{font-size:.62rem;font-weight:500;letter-spacing:.45em;text-transform:uppercase;color:rgba(255,255,255,.65);display:block;margin-bottom:.8rem}
+.slider-h1{font-family:'Cormorant',serif;font-size:clamp(2.8rem,7vw,6rem);font-weight:300;line-height:1;letter-spacing:.04em;text-transform:uppercase;color:var(--white);margin-bottom:.4rem}
+.slider-h1 em{font-style:italic;text-transform:none;color:var(--gold-light);letter-spacing:.01em}
+.slider-sub{font-family:'EB Garamond',serif;font-size:clamp(1rem,2.2vw,1.3rem);font-style:italic;color:rgba(255,255,255,.78);margin-bottom:1.8rem}
+.slider-btns{display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap;margin-bottom:0;padding-bottom:2.5rem}
+.btn-slider-main{background:var(--gold);color:var(--white);font-size:.75rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;padding:.88rem 2.2rem;border-radius:100px;border:none;cursor:pointer;text-decoration:none;transition:all .25s;display:inline-flex;align-items:center;gap:.5rem}
+.btn-slider-main:hover{background:var(--gold-light);transform:translateY(-1px)}
+.btn-slider-wa{background:var(--wa);color:var(--white);font-size:.72rem;font-weight:500;padding:.85rem 1.6rem;border-radius:100px;border:none;cursor:pointer;text-decoration:none;transition:all .25s;display:inline-flex;align-items:center;gap:.45rem}
+.btn-slider-wa:hover{background:var(--wa-dark);transform:translateY(-1px)}
+.btn-slider-wa svg{width:14px;height:14px}
+
+/* Slider controls */
+.slider-controls{position:absolute;bottom:1.8rem;left:50%;transform:translateX(-50%);z-index:5;display:flex;align-items:center;gap:.6rem}
+.slider-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.35);border:none;cursor:pointer;transition:all .3s;padding:0}
+.slider-dot.active{background:var(--gold);width:24px;border-radius:4px}
+.slider-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:5;background:rgba(255,255,255,.15);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.25);color:var(--white);width:44px;height:44px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .25s;font-size:1.1rem}
+.slider-arrow:hover{background:rgba(255,255,255,.28)}
+.slider-arrow.prev{left:2rem}
+.slider-arrow.next{right:2rem}
+@media(max-width:600px){.slider-arrow{display:none}}
+
+/* Curved divider */
+.curve-divider{background:var(--cream);margin-top:-2px;position:relative;z-index:10}
+.curve-divider svg{display:block;width:100%}
+
+/* ── TRUST STRIP ── */
+.trust-strip{background:var(--white);border-top:1px solid var(--divider);border-bottom:1px solid var(--divider);padding:.9rem 0;overflow:hidden}
+.trust-inner{display:flex;animation:scrollx 28s linear infinite;width:max-content}
+.trust-item{display:flex;align-items:center;gap:.55rem;padding:0 2.2rem;border-right:1px solid var(--divider-light);white-space:nowrap;font-size:.65rem;letter-spacing:.14em;text-transform:uppercase;color:var(--text-soft)}
+.trust-dot{width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0}
+
+/* ── SHARED SECTION STYLES ── */
+.section{padding:6rem 4%}
+.section-inner{max-width:1100px;margin:0 auto}
+.section-inner.narrow{max-width:700px}
+.section-inner.center{text-align:center}
+.sect-tag{font-size:.6rem;font-weight:500;letter-spacing:.38em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:.5rem}
+h2{font-family:'Cormorant',serif;font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:300;line-height:1.15;color:var(--charcoal);letter-spacing:.04em;text-transform:uppercase}
+h2 em{font-style:italic;text-transform:none;color:var(--gold);letter-spacing:.01em}
+.sect-sub{font-family:'EB Garamond',serif;font-size:1.05rem;font-style:italic;color:var(--text-soft);line-height:1.7}
+.short-gold{width:40px;height:1.5px;background:var(--gold);display:block;margin:.9rem 0}
+.short-gold.center{margin:.9rem auto}
+hr.thin{border:none;border-top:1px solid var(--divider)}
+
+/* ── TESTIMONIALS ── */
+.testi-section{background:var(--white)}
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:3rem;border-top:1px solid var(--divider)}
+@media(max-width:760px){.testi-grid{grid-template-columns:1fr}}
+.testi{padding:2.5rem 2rem;border-right:1px solid var(--divider);border-bottom:1px solid var(--divider)}
+.testi:last-child{border-right:none}
+@media(max-width:760px){.testi{border-right:none}}
+.testi-occasion{font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:.7rem}
+.testi-stars{color:var(--gold);font-size:.7rem;margin-bottom:.7rem;letter-spacing:.05em}
+.testi-text{font-family:'EB Garamond',serif;font-size:1.05rem;font-style:italic;line-height:1.75;color:var(--charcoal);margin-bottom:1.3rem}
+.testi-name{font-size:.72rem;font-weight:500;color:var(--text-mid);letter-spacing:.05em}
+.testi-loc{font-size:.65rem;color:var(--text-soft);margin-top:.12rem}
+
+/* ── FORM SECTION ── */
+.form-section{background:linear-gradient(180deg,var(--sky-end) 0%,var(--cream) 100%);border-top:1px solid var(--divider);border-bottom:1px solid var(--divider)}
+.form-layout{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start;max-width:1100px;margin:0 auto;padding:6rem 4%}
+@media(max-width:860px){.form-layout{grid-template-columns:1fr;gap:3rem;padding:4rem 4%}}
+.form-left-h{font-family:'Cormorant',serif;font-size:clamp(1.5rem,3vw,2.4rem);font-weight:300;letter-spacing:.05em;text-transform:uppercase;color:var(--charcoal);line-height:1.15;margin-bottom:1rem}
+.form-left-h em{font-style:italic;text-transform:none;color:var(--gold)}
+.form-left p{font-size:.87rem;line-height:1.9;color:var(--text-mid);font-weight:300;margin-bottom:.85rem}
+.form-scripture{border-left:1.5px solid var(--gold);padding:.75rem 1rem;margin:1.2rem 0;background:rgba(176,155,113,.06)}
+.form-scripture p{font-family:'EB Garamond',serif;font-size:.98rem;font-style:italic;color:var(--charcoal);line-height:1.6;margin:0}
+.form-scripture cite{font-style:normal;font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);display:block;margin-top:.3rem}
+.prayer-form{background:var(--white);box-shadow:0 2px 40px rgba(100,120,140,.1);padding:2.5rem;border-radius:8px;border:1px solid var(--divider-light)}
+.form-heading{font-family:'Cormorant',serif;font-size:1rem;font-weight:400;letter-spacing:.2em;text-transform:uppercase;color:var(--charcoal);margin-bottom:1.2rem;padding-bottom:.8rem;border-bottom:1px solid var(--divider);display:flex;align-items:center;gap:.6rem}
+.form-heading::before{content:'';width:18px;height:1.5px;background:var(--gold);display:inline-block}
+.prayer-area{width:100%;background:var(--cream);border:1px solid var(--divider);border-radius:6px;color:var(--charcoal);font-family:'EB Garamond',serif;font-size:1rem;font-style:italic;padding:.9rem 1rem;resize:none;outline:none;min-height:95px;line-height:1.7;transition:all .25s;margin-bottom:.3rem}
+.prayer-area::placeholder{color:rgba(100,90,70,.38);font-style:italic}
+.prayer-area:focus{border-color:var(--gold);background:var(--white);box-shadow:0 0 0 3px rgba(176,155,113,.1)}
+.char-hint{font-size:.62rem;color:var(--text-soft);text-align:right;margin-bottom:.9rem;letter-spacing:.05em}
+.f-row{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-bottom:.6rem}
+@media(max-width:480px){.f-row{grid-template-columns:1fr}}
+.f-input,.f-select{width:100%;background:var(--cream);border:1px solid var(--divider);border-radius:6px;color:var(--charcoal);font-size:.82rem;padding:.68rem .9rem;outline:none;transition:all .25s;font-weight:300;font-family:'Inter',sans-serif}
+.f-input::placeholder{color:rgba(100,90,70,.38)}
+.f-input:focus,.f-select:focus{border-color:var(--gold);background:var(--white);box-shadow:0 0 0 3px rgba(176,155,113,.1)}
+.f-select{-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='7'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .8rem center;background-color:var(--cream);cursor:pointer}
+.f-select:focus{background-color:var(--white)}
+.f-select option{background:var(--white)}
+.tier-heading{font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:var(--text-soft);display:block;margin-bottom:.5rem}
+.tier-row{display:grid;grid-template-columns:repeat(4,1fr);gap:.4rem;margin-bottom:.9rem}
+@media(max-width:360px){.tier-row{grid-template-columns:repeat(2,1fr)}}
+.t-opt{border:1px solid var(--divider);border-radius:6px;padding:.6rem .2rem;cursor:pointer;text-align:center;transition:all .2s;background:var(--cream)}
+.t-opt:hover{border-color:var(--gold-light)}
+.t-opt.on{border-color:var(--gold);background:var(--gold-pale);box-shadow:0 0 0 2px rgba(176,155,113,.15)}
+.t-icon{font-size:.85rem;display:block;margin-bottom:.2rem}
+.t-name{font-size:.54rem;font-weight:500;color:var(--charcoal);display:block;line-height:1.3;letter-spacing:.04em;text-transform:uppercase}
+.t-price{font-size:.54rem;color:var(--gold);display:block;margin-top:.1rem;font-weight:500}
+.form-btns{display:flex;flex-direction:column;gap:.5rem;margin-top:.9rem}
+.btn-form-pill{width:100%;background:var(--gold);color:var(--white);font-size:.72rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;padding:.88rem;border-radius:100px;border:none;cursor:pointer;transition:all .25s;text-align:center;font-family:'Inter',sans-serif}
+.btn-form-pill:hover{background:var(--gold-light);transform:translateY(-1px)}
+.btn-form-wa{width:100%;background:var(--wa);color:var(--white);font-size:.7rem;font-weight:500;padding:.85rem;border-radius:100px;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:.5rem;transition:all .25s;letter-spacing:.06em;text-transform:uppercase;font-family:'Inter',sans-serif}
+.btn-form-wa:hover{background:var(--wa-dark)}
+.btn-form-wa svg{width:14px;height:14px}
+.form-privacy{font-size:.6rem;color:var(--text-soft);text-align:center;margin-top:.7rem;line-height:1.55;letter-spacing:.02em}
+.success-state{display:none;text-align:center;padding:1.5rem 0}
+.success-h{font-family:'Cormorant',serif;font-size:1.4rem;font-weight:300;letter-spacing:.08em;text-transform:uppercase;color:var(--charcoal);margin-bottom:.5rem;margin-top:.6rem}
+.success-p{font-size:.85rem;color:var(--text-mid);line-height:1.8;font-weight:300}
+.success-verse{font-family:'EB Garamond',serif;font-style:italic;font-size:.98rem;color:var(--gold);margin-top:.9rem;line-height:1.6}
+
+/* ── HOW ── */
+.how-section{background:var(--cream)}
+.how-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:3rem;border-top:1px solid var(--divider)}
+@media(max-width:700px){.how-grid{grid-template-columns:1fr}}
+.how-step{padding:2.5rem 2rem;border-right:1px solid var(--divider)}
+.how-step:last-child{border-right:none}
+@media(max-width:700px){.how-step{border-right:none;border-bottom:1px solid var(--divider)}}
+.how-num{font-family:'Cormorant',serif;font-size:2.5rem;font-weight:300;color:var(--gold);opacity:.45;line-height:1;margin-bottom:.9rem}
+.how-step h3{font-family:'Cormorant',serif;font-size:1rem;font-weight:400;letter-spacing:.18em;text-transform:uppercase;color:var(--charcoal);margin-bottom:.6rem}
+.how-step p{font-size:.84rem;line-height:1.85;color:var(--text-mid);font-weight:300}
+
+/* ── VERSE BAND ── */
+.verse-band{background:linear-gradient(135deg,var(--sky-start) 0%,var(--sky-end) 100%);padding:5rem 4%;text-align:center}
+.verse-band-inner{max-width:680px;margin:0 auto}
+.verse-ornament{font-family:'Cormorant',serif;font-size:1.8rem;font-weight:300;color:rgba(255,255,255,.5);letter-spacing:.4em;margin-bottom:1.2rem}
+.verse-main{font-family:'Cormorant',serif;font-size:clamp(1.5rem,3.5vw,2.2rem);font-style:italic;font-weight:300;color:var(--white);line-height:1.45;margin-bottom:.8rem}
+.verse-ref{font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;color:rgba(255,255,255,.65);font-family:'Inter',sans-serif}
+
+/* ── OCCASIONS ── */
+.occ-section{background:var(--white)}
+.occ-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:3rem;border-top:1px solid var(--divider);border-left:1px solid var(--divider)}
+@media(max-width:800px){.occ-grid{grid-template-columns:repeat(2,1fr)}}
+.occ-tile{padding:1.8rem 1.2rem;cursor:pointer;transition:background .2s;text-align:center;border-right:1px solid var(--divider);border-bottom:1px solid var(--divider)}
+.occ-tile:hover{background:linear-gradient(135deg,var(--sky-end),var(--white))}
+.occ-icon{font-size:1.5rem;display:block;margin-bottom:.5rem;transition:transform .2s}
+.occ-tile:hover .occ-icon{transform:scale(1.1)}
+.occ-name{font-family:'Cormorant',serif;font-size:.8rem;font-weight:400;letter-spacing:.14em;text-transform:uppercase;color:var(--charcoal);display:block;margin-bottom:.2rem}
+.occ-desc{font-size:.65rem;color:var(--text-soft);line-height:1.4;font-family:'EB Garamond',serif;font-style:italic}
+
+/* ── TIERS ── */
+.tiers-section{background:var(--cream)}
+.tiers-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:3rem;border-top:1px solid var(--divider);border-left:1px solid var(--divider)}
+@media(max-width:900px){.tiers-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:480px){.tiers-grid{grid-template-columns:1fr}}
+.tier-card{background:var(--white);padding:2.2rem 1.8rem;display:flex;flex-direction:column;border-right:1px solid var(--divider);border-bottom:1px solid var(--divider);transition:background .25s}
+.tier-card:hover{background:linear-gradient(160deg,var(--sky-end),var(--white))}
+.tier-card.featured{background:linear-gradient(160deg,rgba(161,186,204,.15),var(--white))}
+.featured-badge{font-size:.52rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:.7rem;font-family:'Inter',sans-serif}
+.tier-icon-lg{font-size:1.5rem;margin-bottom:.9rem}
+.tier-name{font-family:'Cormorant',serif;font-size:.9rem;font-weight:400;letter-spacing:.15em;text-transform:uppercase;color:var(--charcoal);margin-bottom:.25rem}
+.tier-price{font-family:'Cormorant',serif;font-size:1.8rem;font-weight:300;color:var(--gold);line-height:1}
+.tier-price sup{font-size:.8rem;vertical-align:super}
+.tier-freq{font-size:.6rem;color:var(--text-soft);display:block;margin-bottom:1rem;letter-spacing:.1em;text-transform:uppercase;font-family:'Inter',sans-serif}
+.tier-ul{list-style:none;flex:1;display:flex;flex-direction:column;gap:.45rem;margin-bottom:1.3rem}
+.tier-ul li{font-size:.78rem;color:var(--text-mid);display:flex;gap:.45rem;align-items:flex-start;line-height:1.55;font-weight:300}
+.tier-ul li::before{content:'—';color:var(--gold);flex-shrink:0;font-size:.68rem}
+.tier-link{font-size:.65rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);text-decoration:none;display:inline-flex;align-items:center;gap:.35rem;cursor:pointer;background:none;border:none;border-bottom:1px solid var(--gold);padding:0;transition:color .2s;font-family:'Inter',sans-serif}
+.tier-link:hover{color:var(--gold-light);border-color:var(--gold-light)}
+
+/* ── CTA BAND ── */
+.cta-band{background:var(--white);border-top:1px solid var(--divider);border-bottom:1px solid var(--divider)}
+.cta-inner{max-width:640px;margin:0 auto;padding:6rem 4%;text-align:center}
+.cta-verse{font-family:'EB Garamond',serif;font-style:italic;font-size:1rem;color:var(--text-soft);margin:1rem 0 2.2rem;line-height:1.7}
+.cta-btns{display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap}
+.btn-cta-pill{background:var(--gold);color:var(--white);font-size:.72rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;padding:.9rem 2.2rem;border-radius:100px;border:none;cursor:pointer;text-decoration:none;transition:all .25s;display:inline-flex;align-items:center;gap:.45rem;font-family:'Inter',sans-serif}
+.btn-cta-pill:hover{background:var(--gold-light);transform:translateY(-1px)}
+.btn-cta-wa{background:var(--wa);color:var(--white);font-size:.72rem;font-weight:500;padding:.9rem 1.8rem;border-radius:100px;border:none;cursor:pointer;text-decoration:none;transition:all .25s;display:inline-flex;align-items:center;gap:.45rem;font-family:'Inter',sans-serif}
+.btn-cta-wa:hover{background:var(--wa-dark);transform:translateY(-1px)}
+.btn-cta-wa svg{width:14px;height:14px}
+
+/* ── FAQ ── */
+.faq-section{background:var(--cream)}
+.faq-list{margin-top:2.5rem;border-top:1px solid var(--divider)}
+.faq-item{border-bottom:1px solid var(--divider)}
+.faq-q{padding:1.2rem 0;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-size:.85rem;font-weight:400;color:var(--charcoal);transition:color .2s;user-select:none;letter-spacing:.02em}
+.faq-q:hover,.faq-q.open{color:var(--gold)}
+.faq-arrow{font-size:.65rem;transition:transform .3s;color:var(--gold);flex-shrink:0;margin-left:1rem}
+.faq-q.open .faq-arrow{transform:rotate(180deg)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .35s ease,padding .3s}
+.faq-a.open{max-height:220px;padding:.1rem 0 1.2rem}
+.faq-a p{font-size:.84rem;line-height:1.85;color:var(--text-mid);font-weight:300}
+
+/* ── FOOTER ── */
+footer{background:var(--charcoal);padding:4rem 4% 2rem}
+.footer-top{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1.8fr 1fr 1fr 1fr;gap:3rem;padding-bottom:3rem;border-bottom:1px solid rgba(255,255,255,.08)}
+@media(max-width:760px){.footer-top{grid-template-columns:1fr 1fr}}
+@media(max-width:460px){.footer-top{grid-template-columns:1fr}}
+.footer-logo{font-family:'Cormorant',serif;font-size:1.1rem;font-weight:300;letter-spacing:.3em;text-transform:uppercase;color:var(--white);display:block;margin-bottom:.25rem}
+.footer-logo-sub{font-size:.52rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:.9rem}
+.footer-brand p{font-size:.76rem;color:rgba(255,255,255,.38);line-height:1.7;max-width:220px;font-weight:300}
+.footer-col h4{font-size:.58rem;letter-spacing:.24em;text-transform:uppercase;color:rgba(255,255,255,.28);margin-bottom:.9rem}
+.footer-col a{display:block;font-size:.76rem;color:rgba(255,255,255,.45);text-decoration:none;margin-bottom:.45rem;transition:color .2s;font-weight:300}
+.footer-col a:hover{color:var(--gold)}
+.footer-bottom{max-width:1100px;margin:0 auto;padding-top:1.8rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem}
+.footer-copy{font-size:.62rem;color:rgba(255,255,255,.22);letter-spacing:.05em}
+.footer-verse{font-family:'EB Garamond',serif;font-style:italic;font-size:.76rem;color:rgba(255,255,255,.2)}
+
+/* ── WA FLOAT ── */
+.wa-float{position:fixed;bottom:1.8rem;right:1.8rem;z-index:500;background:var(--wa);width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,.35);cursor:pointer;text-decoration:none;transition:all .3s;animation:wapulse 3.5s ease-in-out infinite}
+.wa-float:hover{background:var(--wa-dark);transform:scale(1.07);animation:none}
+.wa-float svg{width:24px;height:24px}
+.wa-tip{position:absolute;right:60px;top:50%;transform:translateY(-50%);background:var(--charcoal);color:var(--white);font-size:.68rem;white-space:nowrap;padding:.4rem .9rem;border-radius:100px;opacity:0;pointer-events:none;transition:opacity .2s}
+.wa-float:hover .wa-tip{opacity:1}
+
+@keyframes scrollx{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+@keyframes wapulse{0%,100%{box-shadow:0 4px 20px rgba(37,211,102,.35)}50%{box-shadow:0 4px 36px rgba(37,211,102,.6)}}
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .75s ease,transform .75s ease}
+.reveal.in{opacity:1;transform:translateY(0)}
+</style>
+</head>
+<body>
+
+<!-- WA FLOAT -->
+<a class="wa-float" href="https://wa.me/972500000000?text=Hi%2C%20I%27d%20like%20to%20send%20my%20prayer%20to%20the%20Western%20Wall" target="_blank" rel="noopener">
+  <span class="wa-tip">Send via WhatsApp</span>
+  <svg viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <div class="nav-left">
+      <a href="#how">How It Works</a>
+      <a href="#tiers">Pricing</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <a href="#" class="nav-logo">Amen · Health<span>Western Wall Prayer Service</span></a>
+    <div class="nav-right">
+      <a href="#" class="nav-lang">En</a>
+      <a href="#" class="nav-lang">Es</a>
+      <a href="#" class="nav-lang">Fr</a>
+      <a href="#send" class="btn-pill">Send Your Prayer</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══ SLIDER ═══ -->
+<div class="slider" id="slider">
+
+  <!-- Slide 1 — Hand placing note -->
+  <div class="slide active">
+    <img src="img-hand.png" alt="A hand placing a prayer note between the stones of the Western Wall">
+    <div class="slide-overlay"></div>
+  </div>
+
+  <!-- Slide 2 — Pope John Paul II -->
+  <div class="slide">
+    <img src="img-jpii.jpg" alt="Pope John Paul II placing his prayer at the Western Wall, Jerusalem, 2000">
+    <div class="slide-overlay"></div>
+  </div>
+
+  <!-- Slide 3 — Benedict XVI prayer note in the Wall -->
+  <div class="slide">
+    <img src="img-note.jpg" alt="Pope Benedict XVI's prayer note placed in the Western Wall — addressed to God of all peoples">
+    <div class="slide-overlay"></div>
+  </div>
+
+  <!-- Slide 4 — Pope Francis at the Wall -->
+  <div class="slide">
+    <img src="img-francis1.jpg" alt="Pope Francis placing his prayer at the Western Wall, Jerusalem, 2014">
+    <div class="slide-overlay"></div>
+  </div>
+
+  <!-- Slide 5 — Pope Francis reading his prayer -->
+  <div class="slide">
+    <img src="img-francis2.jpg" alt="Pope Francis holding his prayer note, viewed from within the stones of the Wall">
+    <div class="slide-overlay"></div>
+  </div>
+
+  <!-- Slide 6 — Benedict XVI from behind -->
+  <div class="slide">
+    <img src="img-benedict.jpg" alt="Pope Benedict XVI standing in prayer before the Western Wall, 2009">
+    <div class="slide-overlay"></div>
+  </div>
+
+  <!-- Fixed content over all slides -->
+  <div class="slide-content">
+    <div class="slider-hero-text">
+      <span class="slider-eyebrow">Jerusalem · Israel · Open to All Faiths</span>
+      <h1 class="slider-h1">Send Your<br><em>Prayer</em></h1>
+      <p class="slider-sub">to the Western Wall — from anywhere on earth</p>
+      <div class="slider-btns">
+        <a href="#send" class="btn-slider-main">🙏 Send My Prayer — Free</a>
+        <a class="btn-slider-wa" href="https://wa.me/972500000000?text=Hi%2C%20I%27d%20like%20to%20send%20my%20prayer" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          WhatsApp
+        </a>
+      </div>
+    </div>
+    <!-- Caption -->
+    <p class="slide-caption" id="slideCaption">A prayer placed between the ancient stones of the Western Wall, Jerusalem</p>
+  </div>
+
+  <!-- Dots -->
+  <div class="slider-controls">
+    <button class="slider-dot active" onclick="goTo(0)"></button>
+    <button class="slider-dot" onclick="goTo(1)"></button>
+    <button class="slider-dot" onclick="goTo(2)"></button>
+    <button class="slider-dot" onclick="goTo(3)"></button>
+    <button class="slider-dot" onclick="goTo(4)"></button>
+    <button class="slider-dot" onclick="goTo(5)"></button>
+  </div>
+
+  <!-- Arrows -->
+  <button class="slider-arrow prev" onclick="prevSlide()">‹</button>
+  <button class="slider-arrow next" onclick="nextSlide()">›</button>
+</div>
+
+<!-- Curved divider -->
+<div class="curve-divider">
+  <svg viewBox="0 0 1440 64" preserveAspectRatio="none" height="64" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,64 C360,0 1080,0 1440,64 L1440,64 L0,64 Z" fill="#fbfaf7"/>
+  </svg>
+</div>
+
+<!-- TRUST STRIP -->
+<div class="trust-strip">
+  <div class="trust-inner">
+    <span class="trust-item"><span class="trust-dot"></span>14,000+ Prayers Placed</span>
+    <span class="trust-item"><span class="trust-dot"></span>87 Countries</span>
+    <span class="trust-item"><span class="trust-dot"></span>All Faiths Welcome</span>
+    <span class="trust-item"><span class="trust-dot"></span>Photo Confirmation</span>
+    <span class="trust-item"><span class="trust-dot"></span>100% Private</span>
+    <span class="trust-item"><span class="trust-dot"></span>Placed by Hand in Jerusalem</span>
+    <span class="trust-item"><span class="trust-dot"></span>5-Star Rated</span>
+    <span class="trust-item"><span class="trust-dot"></span>Popes Have Prayed Here</span>
+    <span class="trust-item"><span class="trust-dot"></span>14,000+ Prayers Placed</span>
+    <span class="trust-item"><span class="trust-dot"></span>87 Countries</span>
+    <span class="trust-item"><span class="trust-dot"></span>All Faiths Welcome</span>
+    <span class="trust-item"><span class="trust-dot"></span>Photo Confirmation</span>
+    <span class="trust-item"><span class="trust-dot"></span>100% Private</span>
+    <span class="trust-item"><span class="trust-dot"></span>Placed by Hand in Jerusalem</span>
+    <span class="trust-item"><span class="trust-dot"></span>5-Star Rated</span>
+    <span class="trust-item"><span class="trust-dot"></span>Popes Have Prayed Here</span>
+  </div>
+</div>
+
+<!-- TESTIMONIALS -->
+<div class="section testi-section reveal">
+  <div class="section-inner">
+    <span class="sect-tag">Answered Prayers</span>
+    <div class="short-gold"></div>
+    <h2>God Heard <em>Their Prayers</em></h2>
+    <div class="testi-grid">
+      <div class="testi">
+        <span class="testi-occasion">Health &amp; Healing</span>
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"My husband was diagnosed with stage 3 cancer. I sent his name to the Western Wall. Six months later, his scan came back clear. I believe with all my heart that God heard that prayer from Jerusalem."</p>
+        <div class="testi-name">Linda C.</div>
+        <div class="testi-loc">Atlanta, Georgia, USA</div>
+      </div>
+      <div class="testi">
+        <span class="testi-occasion">Family &amp; Marriage</span>
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"My son hadn't spoken to me in three years. I placed a prayer at the Wall. Two weeks later, he called. I wept the whole conversation. Sending that prayer was the most important thing I did."</p>
+        <div class="testi-name">Pastor William H.</div>
+        <div class="testi-loc">Houston, Texas, USA</div>
+      </div>
+      <div class="testi">
+        <span class="testi-occasion">Salvation</span>
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"I placed a prayer for my sister who had walked away from faith. The video of the rabbi placing it at the Wall moved her deeply. She came back to church the following Sunday."</p>
+        <div class="testi-name">Sandra R.</div>
+        <div class="testi-loc">Birmingham, Alabama, USA</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PRAYER FORM -->
+<div class="form-section" id="send">
+  <div class="form-layout">
+    <div class="form-left reveal">
+      <span class="sect-tag">Send Your Prayer</span>
+      <div class="short-gold"></div>
+      <h2 class="form-left-h">Your Words.<br><em>His Ears.</em><br>The Holy Wall.</h2>
+      <div class="form-scripture">
+        <p>"Call to me and I will answer you and tell you great and unsearchable things you do not know."</p>
+        <cite>Jeremiah 33:3</cite>
+      </div>
+      <p>Your prayer will be placed by hand between the ancient stones of the Western Wall in Jerusalem — the same Wall where Popes, presidents, and millions of believers have brought their deepest prayers.</p>
+      <p>Open to Jews, Christians, Muslims, and all who seek God with a sincere heart.</p>
+    </div>
+    <div class="reveal">
+      <div class="prayer-form" id="prayerFormCard">
+        <div class="form-heading">Your Prayer</div>
+        <textarea class="prayer-area" id="prayerText" placeholder="Lord, I come before you today with…  (any language)" maxlength="280" oninput="countC(this)"></textarea>
+        <div class="char-hint" id="cc">0 / 280</div>
+        <div class="f-row">
+          <input class="f-input" type="text" id="fname" placeholder="Your name">
+          <input class="f-input" type="email" id="femail" placeholder="Email for your photo">
+        </div>
+        <div class="f-row" style="margin-bottom:.9rem">
+          <select class="f-select" id="focc" style="grid-column:1/-1;width:100%">
+            <option value="">Prayer intention (optional)</option>
+            <option>Healing &amp; Health</option>
+            <option>Salvation of a Loved One</option>
+            <option>Marriage &amp; Family</option>
+            <option>Financial Breakthrough</option>
+            <option>Peace &amp; Guidance</option>
+            <option>Yom Kippur / Rosh Hashana</option>
+            <option>Bar / Bat Mitzvah</option>
+            <option>Memorial (Yahrzeit)</option>
+            <option>Gratitude &amp; Thanksgiving</option>
+          </select>
+        </div>
+        <span class="tier-heading">Delivery Method</span>
+        <div class="tier-row">
+          <div class="t-opt on" onclick="selT(this)"><span class="t-icon">📜</span><span class="t-name">Digital</span><span class="t-price">Free</span></div>
+          <div class="t-opt" onclick="selT(this)"><span class="t-icon">✍️</span><span class="t-name">Handwritten</span><span class="t-price">$18</span></div>
+          <div class="t-opt" onclick="selT(this)"><span class="t-icon">🕍</span><span class="t-name">By Rabbi</span><span class="t-price">$54</span></div>
+          <div class="t-opt" onclick="selT(this)"><span class="t-icon">⭐</span><span class="t-name">Chief Rabbi</span><span class="t-price">$180</span></div>
+        </div>
+        <div class="form-btns">
+          <button class="btn-form-pill" onclick="submitPrayer()">Place My Prayer at the Wall →</button>
+          <a class="btn-form-wa" href="https://wa.me/972500000000?text=Hi%2C%20I%27d%20like%20to%20send%20my%20prayer" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            Send via WhatsApp
+          </a>
+        </div>
+        <p class="form-privacy">🔒 Completely private · Never read or shared · Photo confirmation within 24–72 hours</p>
+        <div class="success-state" id="successState">
+          <div style="font-size:2rem;margin-bottom:.5rem">🕊️</div>
+          <h3 class="success-h">Your Prayer Is On Its Way</h3>
+          <p class="success-p">We received your prayer with gratitude. A photo of your prayer placed at the Western Wall arrives in your inbox soon.</p>
+          <p class="success-verse">"The Lord is close to the brokenhearted." — Psalm 34:18</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HOW -->
+<div class="section how-section reveal" id="how">
+  <div class="section-inner">
+    <span class="sect-tag">The Journey</span>
+    <div class="short-gold"></div>
+    <h2>From Your Heart <em>to the Ancient Stones</em></h2>
+    <div class="how-grid">
+      <div class="how-step">
+        <div class="how-num">I</div>
+        <h3>Write Your Prayer</h3>
+        <p>Type your prayer in any language, or send via WhatsApp. You may also upload a photo of your own handwritten note. Any faith, any intention.</p>
+      </div>
+      <div class="how-step">
+        <div class="how-num">II</div>
+        <h3>We Place It</h3>
+        <p>Our trusted Jerusalem partner personally visits the Western Wall and places your prayer between the ancient limestone stones — with reverence and care.</p>
+      </div>
+      <div class="how-step">
+        <div class="how-num">III</div>
+        <h3>You Receive Proof</h3>
+        <p>A timestamped photo arrives in your email or WhatsApp. Premium tiers include video, a rabbi's blessing, and a signed certificate of prayer.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- VERSE BAND -->
+<div class="verse-band">
+  <div class="verse-band-inner">
+    <div class="verse-ornament">✦ ✦ ✦</div>
+    <p class="verse-main">"Is anyone among you in trouble? Let them pray."</p>
+    <span class="verse-ref">James 5:13</span>
+  </div>
+</div>
+
+<!-- OCCASIONS -->
+<div class="section occ-section reveal">
+  <div class="section-inner">
+    <span class="sect-tag">Prayer Intentions</span>
+    <div class="short-gold"></div>
+    <h2>What Brings <em>You to the Wall</em></h2>
+  </div>
+  <div style="max-width:1100px;margin:0 auto;padding:0 4%">
+    <div class="occ-grid">
+      <div class="occ-tile" onclick="setOcc('Healing &amp; Health')"><span class="occ-icon">🙏</span><span class="occ-name">Healing</span><span class="occ-desc">For yourself or a loved one</span></div>
+      <div class="occ-tile" onclick="setOcc('Salvation of a Loved One')"><span class="occ-icon">✝️</span><span class="occ-name">Salvation</span><span class="occ-desc">For one who needs God</span></div>
+      <div class="occ-tile" onclick="setOcc('Marriage &amp; Family')"><span class="occ-icon">👨‍👩‍👧</span><span class="occ-name">Family</span><span class="occ-desc">Restore and bless your family</span></div>
+      <div class="occ-tile" onclick="setOcc('Financial Breakthrough')"><span class="occ-icon">🌟</span><span class="occ-name">Breakthrough</span><span class="occ-desc">A miracle in any area</span></div>
+      <div class="occ-tile" onclick="setOcc('Bar / Bat Mitzvah')"><span class="occ-icon">✡️</span><span class="occ-name">Bar Mitzvah</span><span class="occ-desc">A sacred milestone</span></div>
+      <div class="occ-tile" onclick="setOcc('Memorial (Yahrzeit)')"><span class="occ-icon">🕯️</span><span class="occ-name">Memorial</span><span class="occ-desc">In memory of a loved one</span></div>
+      <div class="occ-tile" onclick="setOcc('Peace &amp; Guidance')"><span class="occ-icon">🕊️</span><span class="occ-name">Guidance</span><span class="occ-desc">When you need direction</span></div>
+      <div class="occ-tile" onclick="setOcc('Gratitude &amp; Thanksgiving')"><span class="occ-icon">💛</span><span class="occ-name">Thanksgiving</span><span class="occ-desc">Give thanks to the Lord</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- TIERS -->
+<div class="section tiers-section reveal" id="tiers">
+  <div class="section-inner">
+    <span class="sect-tag">Delivery Options</span>
+    <div class="short-gold"></div>
+    <h2>Choose How Your Prayer <em>Reaches the Wall</em></h2>
+  </div>
+  <div style="max-width:1100px;margin:0 auto;padding:0 4%">
+    <div class="tiers-grid">
+      <div class="tier-card">
+        <div class="tier-icon-lg">📜</div>
+        <div class="tier-name">Digital</div>
+        <div class="tier-price">Free</div>
+        <span class="tier-freq">Always</span>
+        <ul class="tier-ul">
+          <li>Printed &amp; placed at the Wall</li>
+          <li>Photo confirmation by email</li>
+          <li>Within 3–5 days</li>
+          <li>Any language, any faith</li>
+        </ul>
+        <button class="tier-link" onclick="scrollToForm()">Send Free Prayer</button>
+      </div>
+      <div class="tier-card featured">
+        <span class="featured-badge">Most Requested</span>
+        <div class="tier-icon-lg">✍️</div>
+        <div class="tier-name">Handwritten</div>
+        <div class="tier-price"><sup>$</sup>18</div>
+        <span class="tier-freq">Per prayer</span>
+        <ul class="tier-ul">
+          <li>Calligrapher hand-writes your prayer</li>
+          <li>Placed within 24 hours</li>
+          <li>Photo + video confirmation</li>
+          <li>Certificate of placement</li>
+          <li>Physical copy mailed to you</li>
+        </ul>
+        <button class="tier-link" onclick="selTierByName('Handwritten');scrollToForm()">Choose This</button>
+      </div>
+      <div class="tier-card">
+        <div class="tier-icon-lg">🕍</div>
+        <div class="tier-name">By a Rabbi</div>
+        <div class="tier-price"><sup>$</sup>54</div>
+        <span class="tier-freq">Per prayer</span>
+        <ul class="tier-ul">
+          <li>Placed by a Jerusalem rabbi</li>
+          <li>Rabbi prays for you at the Wall</li>
+          <li>Full video of placement</li>
+          <li>Signed letter from the rabbi</li>
+          <li>Embossed certificate</li>
+        </ul>
+        <button class="tier-link" onclick="selTierByName('By Rabbi');scrollToForm()">Choose This</button>
+      </div>
+      <div class="tier-card">
+        <div class="tier-icon-lg">⭐</div>
+        <div class="tier-name">Chief Rabbi</div>
+        <div class="tier-price"><sup>$</sup>180</div>
+        <span class="tier-freq">Limited</span>
+        <ul class="tier-ul">
+          <li>Placed by a Chief Rabbi personally</li>
+          <li>Personal video blessing</li>
+          <li>Handwritten letter to your home</li>
+          <li>Gold-embossed certificate</li>
+          <li>Priority same-day placement</li>
+        </ul>
+        <button class="tier-link" onclick="selTierByName('Chief Rabbi');scrollToForm()">Request This</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA BAND -->
+<div class="cta-band reveal">
+  <div class="cta-inner">
+    <span class="sect-tag">Begin Now</span>
+    <div class="short-gold center"></div>
+    <h2>Your Prayer Can <em>Reach Heaven Today</em></h2>
+    <p class="cta-verse">"Ask and it will be given to you; seek and you will find." — Matthew 7:7</p>
+    <div class="cta-btns">
+      <a href="#send" class="btn-cta-pill">🙏 Send My Prayer — Free</a>
+      <a class="btn-cta-wa" href="https://wa.me/972500000000?text=Hi%2C%20I%27d%20like%20to%20send%20my%20prayer%20to%20the%20Western%20Wall" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        WhatsApp
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- FAQ -->
+<div class="section faq-section reveal" id="faq">
+  <div class="section-inner narrow">
+    <span class="sect-tag">Questions</span>
+    <div class="short-gold"></div>
+    <h2>Common <em>Questions</em></h2>
+    <div class="faq-list">
+      <div class="faq-item"><div class="faq-q" onclick="toggleFAQ(this)">Is this open to Christians and people of all faiths?<span class="faq-arrow">▼</span></div><div class="faq-a"><p>Absolutely. As these photographs show, Popes John Paul II, Benedict XVI, and Francis all placed prayer notes at the Western Wall. Christians, Jews, Muslims, and people of every faith are welcome. The Wall receives all who come with sincere hearts.</p></div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFAQ(this)">How do I know my prayer is actually placed at the Wall?<span class="faq-arrow">▼</span></div><div class="faq-a"><p>Every prayer is photographed at the Western Wall with a timestamp — showing your prayer tucked between the sacred stones. This photograph is emailed directly to you. Premium tiers include video footage of the placement.</p></div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFAQ(this)">Is my prayer kept completely private?<span class="faq-arrow">▼</span></div><div class="faq-a"><p>Yes — 100%. Your prayer goes directly to print without being read by anyone. We never store, share, or access the content of your words. What you write is between you and God.</p></div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFAQ(this)">How long does my prayer stay at the Wall?<span class="faq-arrow">▼</span></div><div class="faq-a"><p>Notes are collected twice yearly by the Western Wall Heritage Foundation and buried with reverence at the Mount of Olives. Your prayer becomes part of this sacred tradition permanently.</p></div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFAQ(this)">Can I pray for someone else?<span class="faq-arrow">▼</span></div><div class="faq-a"><p>Yes. Many people send prayers on behalf of sick parents, struggling children, or friends who need God's intervention. This is one of the most meaningful uses of the service — interceding for someone you love.</p></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <span class="footer-logo">Amen · Health</span>
+      <span class="footer-logo-sub">Western Wall Prayer Service</span>
+      <p>Connecting believers worldwide to the Western Wall in Jerusalem. All faiths welcome. Every prayer received.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Service</h4>
+      <a href="#">How It Works</a>
+      <a href="#">Pricing</a>
+      <a href="#">For Churches</a>
+      <a href="#">Gift a Prayer</a>
+    </div>
+    <div class="footer-col">
+      <h4>About</h4>
+      <a href="#">The Western Wall</a>
+      <a href="#">Prayer Tradition</a>
+      <a href="#">Our Mission</a>
+      <a href="#">Testimonials</a>
+    </div>
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+      <a href="#">Refund Policy</a>
+      <a href="#">Contact</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2026 Amen Health · Jerusalem, Israel</span>
+    <span class="footer-verse">"Ask and it will be given to you" — Matthew 7:7</span>
+  </div>
+</footer>
+
+<script>
+// ── SLIDER ──
+const captions = [
+  'A prayer placed between the ancient stones of the Western Wall, Jerusalem',
+  'Pope John Paul II placing his prayer at the Western Wall, 2000',
+  "Pope Benedict XVI's prayer — 'God of all ages… spiritual home to Jews, Christians and Muslims alike'",
+  'Pope Francis at the Western Wall, Jerusalem, 2014',
+  'Pope Francis reading his prayer note before placing it in the Wall',
+  'Pope Benedict XVI in silent prayer before the Western Wall, 2009'
+];
+
+let current = 0;
+let timer;
+const slides = document.querySelectorAll('.slide');
+const dots = document.querySelectorAll('.slider-dot');
+const caption = document.getElementById('slideCaption');
+
+function goTo(n) {
+  slides[current].classList.remove('active');
+  dots[current].classList.remove('active');
+  current = (n + slides.length) % slides.length;
+  slides[current].classList.add('active');
+  dots[current].classList.add('active');
+  caption.style.opacity = '0';
+  setTimeout(() => {
+    caption.textContent = captions[current];
+    caption.style.opacity = '1';
+  }, 400);
+  resetTimer();
+}
+
+function nextSlide() { goTo(current + 1); }
+function prevSlide() { goTo(current - 1); }
+
+function resetTimer() {
+  clearInterval(timer);
+  timer = setInterval(() => goTo(current + 1), 5500);
+}
+
+resetTimer();
+
+// Keyboard
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight') nextSlide();
+  if (e.key === 'ArrowLeft') prevSlide();
+});
+
+// Touch swipe
+let touchX = 0;
+document.getElementById('slider').addEventListener('touchstart', e => touchX = e.touches[0].clientX);
+document.getElementById('slider').addEventListener('touchend', e => {
+  const diff = touchX - e.changedTouches[0].clientX;
+  if (Math.abs(diff) > 40) diff > 0 ? nextSlide() : prevSlide();
+});
+
+// ── REST ──
+const obs = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) e.target.classList.add('in') }), { threshold: .08, rootMargin: '0px 0px -30px 0px' });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+function countC(el) { document.getElementById('cc').textContent = el.value.length + ' / 280' }
+function selT(el) { document.querySelectorAll('.t-opt').forEach(p => p.classList.remove('on')); el.classList.add('on') }
+function selTierByName(name) { document.querySelectorAll('.t-opt').forEach(p => { p.classList.remove('on'); if (p.querySelector('.t-name').textContent.includes(name)) p.classList.add('on') }) }
+function scrollToForm() { document.getElementById('send').scrollIntoView({ behavior: 'smooth', block: 'start' }); setTimeout(() => document.getElementById('prayerText').focus(), 500) }
+function setOcc(occ) { document.getElementById('focc').value = occ; document.getElementById('send').scrollIntoView({ behavior: 'smooth', block: 'start' }); setTimeout(() => document.getElementById('prayerText').focus(), 500) }
+function submitPrayer() {
+  const prayer = document.getElementById('prayerText').value.trim();
+  const email = document.getElementById('femail').value.trim();
+  if (!prayer) { document.getElementById('prayerText').focus(); document.getElementById('prayerText').style.borderColor = 'var(--gold)'; return }
+  if (!email) { document.getElementById('femail').focus(); return }
+  document.querySelectorAll('#prayerFormCard > *:not(#successState)').forEach(el => el.style.display = 'none');
+  document.getElementById('successState').style.display = 'block';
+}
+function toggleFAQ(el) {
+  const open = el.classList.contains('open');
+  document.querySelectorAll('.faq-q').forEach(q => { q.classList.remove('open'); q.nextElementSibling.classList.remove('open') });
+  if (!open) { el.classList.add('open'); el.nextElementSibling.classList.add('open') }
+}
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const id = a.getAttribute('href');
+    if (id === '#') return;
+    const t = document.querySelector(id);
+    if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth', block: 'start' }) }
+  });
+});
+</script>
+</body>
+</html>
